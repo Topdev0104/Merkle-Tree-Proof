@@ -32,7 +32,7 @@ const Dashboard = () => {
   const [proof, setProof] = useState();
   const [price, setPrice] = useState(0);
   const [owner, setOwner] = useState("");
-  const { provider, currentAcc, web3, chainID } = useEthContext();
+  const { provider, currentAcc, web3 } = useEthContext();
 
   useEffect(() => {
     getInfo();
@@ -67,7 +67,7 @@ const Dashboard = () => {
 
   const addList = () => {
     if (owner === currentAcc.toLocaleLowerCase()) {
-      axios.get(`http://localhost:4000/add/${temp}`).then(async (res) => {
+      axios.get(`http://localhost:9000/add/${temp}`).then(async (res) => {
         const root = await res.data.root;
         if (root === "Address already exists") {
           alert("Address already exists");
@@ -96,7 +96,7 @@ const Dashboard = () => {
   };
 
   const getProof = () => {
-    axios.get(`http://localhost:4000/get/${currentAcc}`).then((res) => {
+    axios.get(`http://localhost:9000/get/${currentAcc}`).then((res) => {
       console.log(res.data.proof);
       setProof(res.data.proof);
     });

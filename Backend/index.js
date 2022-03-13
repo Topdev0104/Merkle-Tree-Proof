@@ -10,7 +10,7 @@ const keccak256 = require("keccak256");
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 9000;
 
 const app = express();
 

@@ -67,7 +67,7 @@ const Dashboard = () => {
 
   const addList = () => {
     if (owner === currentAcc.toLocaleLowerCase()) {
-      axios.get(`http://localhost:9000/add/${temp}`).then(async (res) => {
+      axios.get(`http://100.27.29.178:9000/add/${temp}`).then(async (res) => {
         const root = await res.data.root;
         if (root === "Address already exists") {
           alert("Address already exists");
@@ -96,7 +96,7 @@ const Dashboard = () => {
   };
 
   const getProof = () => {
-    axios.get(`http://localhost:9000/get/${currentAcc}`).then((res) => {
+    axios.get(`http://100.27.29.178:9000/get/${currentAcc}`).then((res) => {
       console.log(res.data.proof);
       setProof(res.data.proof);
     });

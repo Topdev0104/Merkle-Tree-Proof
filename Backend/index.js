@@ -1,18 +1,18 @@
-import express, { Express, Request, Response } from "express";
-import bodyParser from "body-parser";
-import helmet from "helmet";
-import cors from "cors";
-import dotenv from "dotenv";
+const express = require("express");
+const bodyParser = require("body-parser");
+const helmet = require("helmet");
+const cors = require("cors");
+const dotenv = require("dotenv");
 
 //Merkle Tree
-import MerkleTree from "merkletreejs";
-import keccak256 from "keccak256";
+const { MerkleTree } = require("merkletreejs");
+const keccak256 = require("keccak256");
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-const app: Express = express();
+const app = express();
 
 app.use(helmet());
 app.use(bodyParser.json());
@@ -26,8 +26,8 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 //Temp Ethereum addresses
-let addresses: string[] = [];
-let merkleTree: any;
+let addresses = [];
+let merkleTree;
 
 const setMerkle = () => {
   // Hash leaves
@@ -36,7 +36,7 @@ const setMerkle = () => {
   merkleTree = new MerkleTree(leaves, keccak256, { sortPairs: true });
 };
 //Get Root
-const getRoot = (addresses: string[]) => {
+const getRoot = (addresses) => {
   setMerkle();
   let rootHash = merkleTree.getRoot().toString("hex");
 
@@ -44,18 +44,18 @@ const getRoot = (addresses: string[]) => {
 };
 
 //Get Proof
-const getProof = (address: string) => {
+const getProof = (address) => {
   setMerkle();
   let hashedAddress = keccak256(address);
   let proof = merkleTree.getHexProof(hashedAddress);
   return proof;
 };
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (req, res) => {
   res.json("Hello from the TypeScript world!");
 });
 
-app.get("/all", (req: Request, res: Response) => {
+app.get("/all", (req, res) => {
   res.json({ addresses: addresses });
 });
 
